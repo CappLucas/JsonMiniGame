@@ -31,8 +31,8 @@ struct Enemy{
     Enemy(){}
     Enemy(std::string newMessage, std::string win, std::string lose, int newLevel) : message(newMessage), playerWinMessage(win), playerLoseMessage(lose), level(newLevel){
         //           level randomness         +     level based start          
-        health = (std::rand()%((level+1)*25)) + (25 + level*25);
-        power = (std::rand()%((level+1)*25)) + (25 + level*25);
+        health = (std::rand()%((level+1)*200)) + (25 + level*25);
+        power = (std::rand()%((level+1)*200)) + (25 + level*25);
     }
 
     int level;
@@ -216,9 +216,6 @@ void Player::fightEnemy(int level){
     Enemy doofenshmirtz{"You have stumbled across LEGENDARY Dr. Heinz Doofenshmirtz!!!!!!!!!!", "You found perry and foiled his evil plan! CURSE YOU PERRY THE PLATIPUS!", "You were killed by Doofenshmirtz and his Inexplicable Giant Floating Baby Head-Attract-Inator!!!!! What an honor!",10};
     doofenshmirtz.power = 1000000;
     doofenshmirtz.health = 1000000;
-    doofenshmirtz.healthPunishment = 0;
-    doofenshmirtz.powerPunishment = 0;
-    doofenshmirtz.moneyPunishment = 0;
     doofenshmirtz.winMoney = 1000000;
 
     Enemy impossibleEnemies[] = {lavaMonster,evilWizard,doofenshmirtz};
@@ -237,10 +234,13 @@ void Player::fightEnemy(int level){
             break;
         case 3:
             selected = lavaMonster;
+            break;
         case 4:
             selected = evilWizard;
+            break;
         case 5:
             selected = doofenshmirtz;
+            break;
         default:
             selected = doofenshmirtz;
     }
