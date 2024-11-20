@@ -8,11 +8,13 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
-				"${file}",
+				"${workspaceFolder}/Source/Main.cpp",
 				"-I",
 				"C:/Libraries/json-develop/include",
+				"-I",
+				"${workspaceFolder}/Include",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+				"${workspaceFolder}/Build/MiniGame.exe"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

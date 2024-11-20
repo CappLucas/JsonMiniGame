@@ -4,6 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "C:/Libraries/json-develop/include",
+                "${workspaceFolder}/Include",
                 "${workspaceFolder}/**"
             ],
             "defines": [

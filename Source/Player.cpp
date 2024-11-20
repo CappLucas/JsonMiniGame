@@ -1,142 +1,19 @@
-#include "nlohmann/json.hpp"
+#include "Player.h"
 
-#include <iostream>
+#include "Types.h"
+
 #include <fstream>
-#include <limits>
-#include <ctime>
-#include <cstdlib>
-#include <cmath>
+#include <iostream>
+#include <string>
 
-using json = nlohmann::json;
-
-struct Cooridinate{
-    Cooridinate(float nX, float nY) : x(nX), y(nY){}
-
-    float x, y;
-
-    Cooridinate operator+(Cooridinate &coord){
-        return {coord.x + x, coord.y + y};
+void Player::loadJson(bool preset){
+    std::ifstream jsonFile;
+    
+    if(preset){
+        jsonFile.open("Save/Default.json");
+    }else{
+        jsonFile.open("Save/Save.json");
     }
-    Cooridinate operator-(Cooridinate &coord){
-        return {coord.x - x, coord.y - y};
-    }
-    Cooridinate operator*(Cooridinate &coord){
-        return {coord.x * x, coord.y * y};
-    }
-    Cooridinate operator/(Cooridinate &coord){
-        return {coord.x / x, coord.y / y};
-    }
-};
-struct Enemy{
-    Enemy(){}
-    Enemy(std::string newMessage, std::string win, std::string lose, int newLevel) : message(newMessage), playerWinMessage(win), playerLoseMessage(lose), level(newLevel){
-        //           level randomness         +     level based start          
-        health = (std::rand()%((level+1)*200)) + (25 + level*25);
-        power = (std::rand()%((level+1)*200)) + (25 + level*25);
-    }
-
-    int level;
-
-    int health;
-    int power;
-
-    int healthPunishment = (level+1)*20;
-    int powerPunishment = (level+1)*20;
-    int moneyPunishment = (level+1)*20;
-
-    int winMoney = level*100 + std::rand()%((level+1)*100);
-    int winHealth = (level+1)*10;
-    int winPower = (level+1)*10;
-
-    std::string message;
-
-    std::string playerWinMessage;
-    std::string playerLoseMessage;
-
-    void printWin(){
-        std::cout << playerWinMessage << std::endl;
-
-        std::cout << "Money + " , winMoney;
-        std::cout << "\nHealth + " , winHealth;
-        std::cout << "\nPower + " , winPower;
-    }
-    void printLose(){
-        std::cout << playerLoseMessage << "\n\n";
-        
-        std::cout << "\nMoney - " , moneyPunishment;
-        std::cout << "\nHealth - " , healthPunishment;
-        std::cout << "\nPower - " , powerPunishment;
-    }
-};
-
-//items the player can pick up.
-struct PickUp{
-    PickUp(){}
-    PickUp(std::string newMessage, int newHealthAffect, int newPowerAffect) : message(newMessage), healthAffect(newHealthAffect), powerAffect(newPowerAffect){}
-
-    int healthAffect;
-    int powerAffect;
-
-    std::string message;
-
-    void printAffect(){
-        if(powerAffect != 0 && healthAffect != 0){
-            std::cout << "Health "  << (healthAffect < 0 ? "- " : "+ ") << healthAffect;
-            std::cout << "\nPower "  << (powerAffect < 0 ? "- " : "+ ") << powerAffect;
-        }
-        else if(healthAffect != 0){
-            std::cout << "Health"  << (healthAffect < 0 ? " " : "+ ") << healthAffect;
-        }
-        else if(powerAffect != 0){
-            std::cout << "Power"  << (powerAffect < 0 ? " " : "+ ") << powerAffect;
-        }
-        else{
-            std::cout << "No Affect.";
-        }   
-    }
-    void printAll(){
-        std::cout << "\n" << message << "\n";
-        printAffect();
-    }
-};
-
-class Player{
-    public:
-        void loadJson();
-        void saveJson();
-
-        void addEnemy(){enemiesKilled += 1;};
-
-        void addMoney(int add){money += add;};
-        void addPower(int add){power += power;};
-
-        void changeHealth(int add){health += add;};
-
-        void move(Cooridinate displacement){position + displacement;};
-
-        void setPosition(Cooridinate newPosition){position = newPosition;};
-
-        void stats();
-
-        void pickUpItem(PickUp &item);
-
-        void explore();
-        void fightEnemy(int level = 1);
-
-    private:
-        int enemiesKilled = 0;
-        int money = 0;
-        int power = 0;
-        int health = 0;
-        Cooridinate position = {0,0};
-
-        std::string name = "";
-        
-        float distanceTraveled = 0;
-};
-
-void Player::loadJson(){
-    std::ifstream jsonFile("Save.json");
 
     if(jsonFile.fail()){
         std::cout << "Save file not found. Loading default settings." << std::endl;
@@ -178,7 +55,7 @@ void Player::saveJson(){
     jsonData["EnemiesKilled"] = enemiesKilled;
     jsonData["DistanceTraveled"] = distanceTraveled;
 
-    std::ofstream jsonFile("Save.json");
+    std::ofstream jsonFile("Save/Save.json");
     jsonFile << jsonData.dump(4);
 }
 void Player::stats(){
@@ -213,12 +90,13 @@ void Player::fightEnemy(int level){
     Enemy lavaMonster{"You have encountered a lava monster!", "You brought him to the ocean.", "Your now part of a volcanoe.", 4};
     Enemy evilWizard{"You have encountered an evil wizard!", "You turned him into a chicken (you went to magic school).", "Your now a ladybug!", 5};
     
+    Enemy thanos{"You have encountered Thanos!", "You stole his stones and sent him to the shadow realm", "You were snapped into the next dimension (literally).", 10};
     Enemy doofenshmirtz{"You have stumbled across LEGENDARY Dr. Heinz Doofenshmirtz!!!!!!!!!!", "You found perry and foiled his evil plan! CURSE YOU PERRY THE PLATIPUS!", "You were killed by Doofenshmirtz and his Inexplicable Giant Floating Baby Head-Attract-Inator!!!!! What an honor!",10};
     doofenshmirtz.power = 1000000;
     doofenshmirtz.health = 1000000;
     doofenshmirtz.winMoney = 1000000;
 
-    Enemy impossibleEnemies[] = {lavaMonster,evilWizard,doofenshmirtz};
+    Enemy impossibleEnemies[] = {lavaMonster,evilWizard,doofenshmirtz,thanos};
 
     //finds enemy to fight
     Enemy selected;
@@ -357,50 +235,4 @@ void Player::explore(){
         pickUpItem(magicalWizard);
     }
     std::cout << "\n" <<  std::endl;
-}
-
-
-int main() {
-    Player hero;
-
-    std::cout << "Loading..." << std::endl;
-    hero.loadJson();
-
-    bool kill = false;
-    while(!kill){
-        std::cout   << "\nExlore: 1"
-                    << "\nStats: 2"
-                    << "\nSave and quit: 3\n"
-                    << std::endl;
-        
-        int number;
-
-        std::cin >> number;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        if(std::cin.fail()){
-            std::cout << "\nEnter a number.\n" << std::endl;
-            std::cin.clear();
-            break;
-        }
-
-        switch(number){
-            case 1:
-                hero.explore();
-                break;
-            case 2:
-                hero.stats();
-                break;
-            case 3:
-                //saves and ends program
-                hero.saveJson();
-                kill = true;
-                break;
-            default:
-                std::cout << "\nInvalid input.\n" << std::endl;
-        }
-    }
-
-    hero.saveJson();
-    return 0;
 }

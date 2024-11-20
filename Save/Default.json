@@ -1,0 +1,15 @@
+{
+    "Name": "Hero",
+
+    "DistanceTraveled": 0,
+    "EnemiesKilled": 0,
+
+    "Health": 100,
+    "Money": 0,
+    "Power": 100,
+    
+    "Position": {
+        "x": 0,
+        "y": 0
+    }
+}
