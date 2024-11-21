@@ -10,9 +10,9 @@ void Player::loadJson(bool preset){
     std::ifstream jsonFile;
     
     if(preset){
-        jsonFile.open("Save/Default.json");
+        jsonFile.open("Build/Save/Default.json");
     }else{
-        jsonFile.open("Save/Save.json");
+        jsonFile.open("Build/Save/Save.json");
     }
 
     if(jsonFile.fail()){
@@ -55,8 +55,11 @@ void Player::saveJson(){
     jsonData["EnemiesKilled"] = enemiesKilled;
     jsonData["DistanceTraveled"] = distanceTraveled;
 
-    std::ofstream jsonFile("Save/Save.json");
-    jsonFile << jsonData.dump(4);
+    std::ofstream jsonFile("Build/Save/Save.json");
+
+    if(jsonFile.is_open()){jsonFile << jsonData.dump(4);}
+    else{std::cout << "Failed to save.";}
+    
 }
 void Player::stats(){
     std::cout   << "\n----------- Hero ------------\n"
