@@ -8,13 +8,16 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
-				"${workspaceFolder}/Source/Main.cpp",
+				"${workspaceFolder}\\Source\\PickUp.cpp",
+				"${workspaceFolder}\\Source\\Enemy.cpp",
+				"${workspaceFolder}\\Source\\Player.cpp",
+				"${workspaceFolder}\\Source\\Main.cpp",
 				"-I",
-				"C:/Libraries/json-develop/include",
+				"C:\\Libraries\\json-develop\\include",
 				"-I",
-				"${workspaceFolder}/Include",
+				"${workspaceFolder}\\Include",
 				"-o",
-				"${workspaceFolder}/Build/MiniGame.exe"
+				"${workspaceFolder}\\Build\\MiniGame.exe"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

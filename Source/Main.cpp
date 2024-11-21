@@ -1,13 +1,4 @@
-#include "nlohmann/json.hpp"
 
-#include <iostream>
-#include <fstream>
-#include <limits>
-#include <ctime>
-#include <cstdlib>
-#include <cmath>
-
-#include "Player.h"
 // using json = nlohmann::json;
 
 // struct Cooridinate{
@@ -377,6 +368,9 @@
 //     std::cout << "\n" <<  std::endl;
 // }
 
+#include "Player.h"
+
+#include <iostream>
 
 int main() {
     Player hero;
@@ -401,13 +395,12 @@ int main() {
 
         std::cin >> number;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+        
         if(std::cin.fail()){
             std::cout << "\nEnter a number.\n" << std::endl;
             std::cin.clear();
             break;
         }
-
         switch(number){
             case 1:
                 hero.explore();
@@ -428,7 +421,6 @@ int main() {
                 std::cout << "\nInvalid input.\n" << std::endl;
         }
     }
-
     hero.saveJson();
     return 0;
 }

@@ -90,13 +90,15 @@ void Player::fightEnemy(int level){
     Enemy lavaMonster{"You have encountered a lava monster!", "You brought him to the ocean.", "Your now part of a volcanoe.", 4};
     Enemy evilWizard{"You have encountered an evil wizard!", "You turned him into a chicken (you went to magic school).", "Your now a ladybug!", 5};
     
+    Enemy harderEnemies[] = {lavaMonster,evilWizard};
+
     Enemy thanos{"You have encountered Thanos!", "You stole his stones and sent him to the shadow realm", "You were snapped into the next dimension (literally).", 10};
     Enemy doofenshmirtz{"You have stumbled across LEGENDARY Dr. Heinz Doofenshmirtz!!!!!!!!!!", "You found perry and foiled his evil plan! CURSE YOU PERRY THE PLATIPUS!", "You were killed by Doofenshmirtz and his Inexplicable Giant Floating Baby Head-Attract-Inator!!!!! What an honor!",10};
     doofenshmirtz.power = 1000000;
     doofenshmirtz.health = 1000000;
     doofenshmirtz.winMoney = 1000000;
 
-    Enemy impossibleEnemies[] = {lavaMonster,evilWizard,doofenshmirtz,thanos};
+    Enemy impossibleEnemies[] = {doofenshmirtz,thanos};
 
     //finds enemy to fight
     Enemy selected;
@@ -111,16 +113,11 @@ void Player::fightEnemy(int level){
             selected = hardEnemies[std::rand()%2];
             break;
         case 3:
-            selected = lavaMonster;
+            selected = harderEnemies[std::rand()%2];
             break;
         case 4:
-            selected = evilWizard;
+            selected = impossibleEnemies[std::rand()%2];
             break;
-        case 5:
-            selected = doofenshmirtz;
-            break;
-        default:
-            selected = doofenshmirtz;
     }
 
     //asks the player if they want to fight or not.
@@ -133,14 +130,6 @@ void Player::fightEnemy(int level){
         std::cout << "\nFight skipped";
         return;
     };
-
-    //1% change to win against doofenshmirtz
-    if(selected.power == doofenshmirtz.power && std::rand()%100 != 1){
-        win = false;
-    }
-    else{
-        win = true;
-    }
 
     int powerDifference = power - selected.power;
     int healthDifference = health - selected.health;
@@ -155,7 +144,7 @@ void Player::fightEnemy(int level){
             win = true;
         }
         else{
-            win = (std::rand()%2) == 0;
+            win = (std::rand()%100) < int((power/selected.power)*100);
         }
     }//if player is strong in neighter then they will lose
     else{
@@ -212,26 +201,29 @@ void Player::explore(){
     // 50% chance to encounter a monster
     int chance = std::rand()%100;
 
-    if(chance > 50){//50% chance
-        //fights levels 0, 1
+    if(chance > 70){//30% chance
+        //fights easy and medium mobs
         fightEnemy(std::rand()%2);
     }
+    else if(chance > 50){ //20% chance
+        //fights hard or harder mobs
+        fightEnemy(std::rand()%2 + 2);
+    }
+    else if(chance > 35){ //15% chance
+        fightEnemy(4);
+    }
     //lose health/power
-    else if(chance > 30){ //20% chance
+    else if(chance > 10){ //25% chance
         PickUp selected = badMiddleItems[std::rand()%4];
         pickUpItem(selected);
     }
-    //fight big monster of level 2 or 3 or 5
-    else if(chance > 20){ //10% chance
-        fightEnemy(std::rand()%3 + 3);
-    }
-    //find ok loot/power // 15% chance
-    else if(chance > 5){
+    //find ok loot/power // 10% chance
+    else if(chance > 1){
         PickUp selected = goodMiddleItems[std::rand()%5];
         pickUpItem(selected);
     }
     //find super loot
-    else if(chance <= 5){// 5% chance
+    else if(chance <= 1){// 1% chance
         pickUpItem(magicalWizard);
     }
     std::cout << "\n" <<  std::endl;
