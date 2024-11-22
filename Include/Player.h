@@ -12,6 +12,10 @@
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <string>
+#include <filesystem>
+
+namespace fileSystem = std::filesystem;
 
 class Player{
     public:
@@ -21,11 +25,11 @@ class Player{
         void addEnemy(){enemiesKilled += 1;};
 
         void addMoney(int add){money += add;};
-        void addPower(int add){power += power;};
+        void addPower(int add){power += add;};
 
         void changeHealth(int add){health += add;};
 
-        void move(Cooridinate displacement){position + displacement;};
+        void move(Cooridinate displacement){position = position + displacement;};
 
         void setPosition(Cooridinate newPosition){position = newPosition;};
 
@@ -48,6 +52,9 @@ class Player{
         std::string name = "";
         
         float distanceTraveled = 0;
+
+        fileSystem::path executableFolder = fileSystem::current_path();
+        fileSystem::path saveFolder = executableFolder / "Save";
 };
 
 #endif

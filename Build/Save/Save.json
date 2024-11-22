@@ -1,12 +1,12 @@
 {
-    "DistanceTraveled": 0.0,
+    "DistanceTraveled": 4443.45947265625,
     "EnemiesKilled": 0,
-    "Health": 132,
-    "Money": -20,
+    "Health": 10379,
+    "Money": 107178,
     "Name": "Hero",
     "Position": {
-        "x": 0.0,
-        "y": -15.0
+        "x": -22.0,
+        "y": 535.0
     },
-    "Power": 80
+    "Power": 10054
 }

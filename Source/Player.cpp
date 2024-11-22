@@ -1,18 +1,12 @@
 #include "Player.h"
 
-#include "Types.h"
-
-#include <fstream>
-#include <iostream>
-#include <string>
-
 void Player::loadJson(bool preset){
     std::ifstream jsonFile;
     
     if(preset){
-        jsonFile.open("Build/Save/Default.json");
+        jsonFile.open(saveFolder/"Default.json");
     }else{
-        jsonFile.open("Build/Save/Save.json");
+        jsonFile.open(saveFolder/"Save.json");
     }
 
     if(jsonFile.fail()){
@@ -55,7 +49,9 @@ void Player::saveJson(){
     jsonData["EnemiesKilled"] = enemiesKilled;
     jsonData["DistanceTraveled"] = distanceTraveled;
 
-    std::ofstream jsonFile("Build/Save/Save.json");
+
+    //find path of json file
+    std::ofstream jsonFile(saveFolder/"Save.json");
 
     if(jsonFile.is_open()){jsonFile << jsonData.dump(4);}
     else{std::cout << "Failed to save.";}
