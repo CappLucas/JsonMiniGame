@@ -3,23 +3,25 @@
 
 #pragma once
 
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
-struct PickUp{
-    PickUp(){}
-    PickUp(std::string newMessage, int newHealthAffect, int newPowerAffect) : message(newMessage), healthAffect(newHealthAffect), powerAffect(newPowerAffect){}
+struct PickUp {
+  PickUp() {}
+  PickUp(std::string newMessage, int newHealthAffect, int newPowerAffect)
+      : message(newMessage), healthAffect(newHealthAffect),
+        powerAffect(newPowerAffect) {}
 
-    int healthAffect;
-    int powerAffect;
+  int healthAffect;
+  int powerAffect;
 
-    std::string message;
+  std::string message;
 
-    void printAffect();
+  void printAffect();
 
-    void printAll();
+  void printAll();
 };
 
 #endif

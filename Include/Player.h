@@ -3,58 +3,62 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Pickup.h"
 #include "Enemy.h"
+#include "Pickup.h"
+#include "Types.h"
 
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include <cstdlib>
+
 #include <cmath>
-#include <string>
+#include <cstdlib>
+#include <ctime>
 #include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <string>
+
 
 namespace fileSystem = std::filesystem;
 
-class Player{
-    public:
-        void loadJson(bool preset = false);
-        void saveJson();
+class Player
+{
+public:
+  void loadJson(bool preset = false);
+  void saveJson();
 
-        void addEnemy(){enemiesKilled += 1;};
+  void addEnemy() { enemiesKilled += 1; };
 
-        void addMoney(int add){money += add;};
-        void addPower(int add){power += add;};
+  void addMoney(int add) { money += add; };
+  void addPower(int add) { power += add; };
 
-        void changeHealth(int add){health += add;};
+  void changeHealth(int add) { health += add; };
 
-        void move(Cooridinate displacement){position = position + displacement;};
+  void move(Cooridinate displacement) { position = position + displacement; };
 
-        void setPosition(Cooridinate newPosition){position = newPosition;};
+  void setPosition(Cooridinate newPosition) { position = newPosition; };
 
-        void stats();
+  void stats();
 
-        void pickUpItem(PickUp &item);
+  void pickUpItem(PickUp &item);
 
-        void explore();
-        void fightEnemy(int level = 1);
+  void explore();
+  void fightEnemy(int level = 1);
 
-        int getHealth(){return health;}
-        int getPower(){return power;}
-    private:
-        int enemiesKilled = 0;
-        int money = 0;
-        int power = 0;
-        int health = 0;
-        Cooridinate position = {0,0};
+  int getHealth() { return health; }
+  int getPower() { return power; }
 
-        std::string name = "";
-        
-        float distanceTraveled = 0;
+private:
+  int enemiesKilled = 0;
+  int money = 0;
+  int power = 0;
+  int health = 0;
+  Cooridinate position = {0, 0};
 
-        fileSystem::path executableFolder = fileSystem::current_path();
-        fileSystem::path saveFolder = executableFolder / "Save";
+  std::string name = "";
+
+  float distanceTraveled = 0;
+
+  fileSystem::path executableFolder = fileSystem::current_path();
+  fileSystem::path saveFolder = executableFolder / "Save";
 };
 
 #endif

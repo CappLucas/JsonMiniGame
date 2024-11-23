@@ -3,40 +3,45 @@
 
 #pragma once
 
-#include <string>
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <string>
 
-struct Enemy{
-    Enemy(){}
-    Enemy(std::string newMessage, std::string win, std::string lose, int newLevel) : message(newMessage), playerWinMessage(win), playerLoseMessage(lose), level(newLevel){
-        //           level randomness         +     level based start          
-        health = (std::rand()%((level+1)*200)) + (25 + level*25);
-        power = (std::rand()%((level+1)*200)) + (25 + level*25);
-    }
 
-    int level;
+struct Enemy
+{
+  Enemy() {}
+  Enemy(std::string newMessage, std::string win, std::string lose, int newLevel)
+      : message(newMessage), playerWinMessage(win), playerLoseMessage(lose),
+        level(newLevel)
+  {
 
-    int health;
-    int power;
+    health = (std::rand() % ((level + 1) * 200)) + (25 + level * 25);
+    power = (std::rand() % ((level + 1) * 200)) + (25 + level * 25);
+  }
 
-    int healthPunishment = (level+1)*20;
-    int powerPunishment = (level+1)*20;
-    int moneyPunishment = (level+1)*20;
+  int level;
 
-    int winMoney = level*100 + std::rand()%((level+1)*100);
-    int winHealth = (level+1)*10;
-    int winPower = (level+1)*10;
+  int health;
+  int power;
 
-    std::string message;
+  int healthPunishment = (level + 1) * 20;
+  int powerPunishment = (level + 1) * 20;
+  int moneyPunishment = (level + 1) * 20;
 
-    std::string playerWinMessage;
-    std::string playerLoseMessage;
+  int winMoney = level * 100 + std::rand() % ((level + 1) * 100);
+  int winHealth = (level + 1) * 10;
+  int winPower = (level + 1) * 10;
 
-    void printWin();
-    void printLose();
+  std::string message;
+
+  std::string playerWinMessage;
+  std::string playerLoseMessage;
+
+  void printWin();
+  void printLose();
 };
 
 #endif
